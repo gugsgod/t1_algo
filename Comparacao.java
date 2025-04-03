@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class Comparacao {
     public static void main(String [] args){
-        NossoVetor v100k = new NossoVetor(100);
-        NossoVetor v200k = new NossoVetor(200);
-        NossoVetor v400k = new NossoVetor(400);
-        NossoVetor v800k = new NossoVetor(800);
-        NossoVetor v1m600k = new NossoVetor(1600);
+        NossoVetor v100k = new NossoVetor(100000);
+        NossoVetor v200k = new NossoVetor(200000);
+        NossoVetor v400k = new NossoVetor(400000);
+        NossoVetor v800k = new NossoVetor(800000);
+        NossoVetor v1m600k = new NossoVetor(1600000);
         todosOsTestes(v100k,30,"100k");
         todosOsTestes(v200k,30,"200k");
         todosOsTestes(v400k,30,"400k");
