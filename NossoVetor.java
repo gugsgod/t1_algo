@@ -40,23 +40,7 @@ public class NossoVetor {
     return ocupacao == 0;
   }
 
-  // private void dobraVetor () {
-  // int[] temp = new int[vetor.length*2]; //temporário alocado com o dobro do
-  // tamanho
-  // for (int i=0; i < ocupacao; i++) { //copiando elementos do vetor para o
-  // temporário
-  // temp[i] = vetor[i];
-  // }
-  // vetor = temp; //a variável de referência vetor "aponta" para a região
-  // "temporária"
-  // }
-  // private void reduzVetor() {
-  // int[] temp = new int[vetor.length/2];
-  // for (int i=0; i< ocupacao; i++) {
-  // temp[i] = vetor[i];
-  // }
-  // vetor = temp;
-  // }
+  @SuppressWarnings("ManualArrayToCollectionCopy")
   private void redimensiona(int novoTamanho) {
     int[] temp = new int[novoTamanho];
     for (int i = 0; i < ocupacao; i++) {
@@ -67,11 +51,7 @@ public class NossoVetor {
 
   @Override
   public String toString() {
-    String s = "ocupacao = " + ocupacao + "\n";
-    for (int i = 0; i < ocupacao; i++) {
-      s += vetor[i] + " ";
-    }
-    return s + "\n";
+    return "";
   }
 
   public boolean contem(int i) {
@@ -96,43 +76,100 @@ public class NossoVetor {
     ocupacao = vetor.length;
   }
 
-  public int bubbleSort() {
-    int iteracoes = 0;
+  public long bubbleSort() {
+    long trocas = 0;
+    long comparacao = 0;
+    
     for (int i = 1; i < vetor.length; i++) {
-      for (int j = 0; j < vetor.length - i; j++) {
-        if (vetor[j] > vetor[j + 1]) {
-          int aux = vetor[j];
-          vetor[j] = vetor[j + 1];
-          vetor[j + 1] = aux;
-          iteracoes++;
+        for (int j = 0; j < vetor.length - i; j++) {
+            comparacao++;
+            if (vetor[j] > vetor[j + 1]) {
+                int aux = vetor[j];
+                vetor[j] = vetor[j + 1];
+                vetor[j + 1] = aux;
+                trocas++;
+            }
         }
-      }
     }
-    return iteracoes;
-  }
+    long total = trocas + comparacao;
+    return (total);
+}
 
-  public void selectionSort() {
-    for (int i = 0; i < vetor.length - 1; ++i) {
-      int min = i;
-      for (int j = i + 1; j < vetor.length; ++j)
-        if (vetor[j] < vetor[min])
-          min = j;
-      int x = vetor[i];
-      vetor[i] = vetor[min];
-      vetor[min] = x;
+  public long selectionSort() {
+        long trocas = 0;
+        long comparacao = 0;
+        for (int i = 0; i < vetor.length - 1; ++i) {
+            int min = i;
+            for (int j = i + 1; j < vetor.length; ++j){
+                comparacao++;
+                if (vetor[j] < vetor[min]){
+                    trocas++;
+                    min = j;
+                }
+            }
+            int x = vetor[i];
+            vetor[i] = vetor[min];
+            vetor[min] = x;
+        }
+        return (trocas + comparacao);
     }
-  }
 
-  public void insertionSort() {
+  public long insertionSort() {
+    long trocas = 0;
+    long comparacao = 0;
     for (int j = 1; j < vetor.length; ++j) {
       int x = vetor[j];
       int i;
-      for (i = j - 1; i >= 0 && vetor[i] > x; --i)
+      for (i = j - 1; i >= 0 && vetor[i] > x; --i, comparacao++){
+        trocas++;
         vetor[i + 1] = vetor[i];
+      }
+      comparacao++;
+      trocas++;
       vetor[i + 1] = x;
     }
+    return (trocas + comparacao);
   }
+
+  public long buscaSimples (long alvo) {
+    int x = vetor[(int) alvo];
+    int comparacoes = 0;
+    for (int i=0; i < vetor.length; i++) { 
+      comparacoes++;  
+      if (vetor[i] == x) {
+        return comparacoes;
+      }
+    }
+    return -1;
+  }
+  
+
+  public long buscaBinaria(long alvo) {
+    int x = vetor[(int) alvo];
+    long ini = 0;
+    long fim = vetor.length - 1; 
+    long comparacao = 0;
+    while (ini <= fim) {
+      int meio =(int)((ini + fim) / 2);
+      long metade = vetor[meio];
+      if (x == metade) {
+        comparacao++;
+        return comparacao;
+      }
+      if (x > metade) {
+        ini = meio + 1;
+        comparacao++;
+      }else {
+        fim = meio - 1;
+        comparacao++;
+      }
+    }
+    return -1;
+  }
+
 }
+
+
 
 class VetorVazioException extends RuntimeException {
   public VetorVazioException(String msg) {
