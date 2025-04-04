@@ -9,16 +9,16 @@ public class Comparacao {
         NossoVetor v800k = new NossoVetor(800000);
         NossoVetor v1m600k = new NossoVetor(1600000);
         todosOsTestes(v100k,30,"100k");
-        todosOsTestes(v200k,30,"200k");
-        todosOsTestes(v400k,30,"400k");
-        todosOsTestes(v800k, 30, "800k");
-        todosOsTestes(v1m600k, 10, "16kk");
+//        todosOsTestes(v200k,30,"200k");
+//        todosOsTestes(v400k,30,"400k");
+//        todosOsTestes(v800k, 30, "800k");
+//        todosOsTestes(v1m600k, 1, "16kk");
     }
     
     static void todosOsTestes(NossoVetor vetor, int reps, String watermark){
-        testeSS(vetor, reps, watermark);
-        testeIS(vetor, reps, watermark);
-        testeBBS(vetor, reps, watermark);
+        //testeSS(vetor, reps, watermark);
+        //testeIS(vetor, reps, watermark);
+        //testeBBS(vetor, reps, watermark);
         comparacaoBuscas(vetor, reps, watermark);
     }
 
@@ -54,6 +54,7 @@ public class Comparacao {
 
     static void comparacaoBuscas(NossoVetor vetor, int reps, String watermark){
         long[] totalLinear = new long[reps];
+        long[] custoOrdenacao = new long[reps];
         long[] totalBinario = new long[reps];
         for(int i = 0; i < reps; i++){
             vetor.preecheVetor();
@@ -63,12 +64,14 @@ public class Comparacao {
             totalLinear[i] = comp;
 
             //ordenar
-            vetor.insertionSort();
+            long dale = vetor.insertionSort();
+            custoOrdenacao[i] = dale;
             //buscar
             comp = vetor.buscaBinaria(alvo);
             totalBinario[i] = comp;
         }
         System.out.println(watermark + Arrays.toString(totalLinear));
+        System.out.println(watermark + Arrays.toString(custoOrdenacao));
         System.out.println(watermark + Arrays.toString(totalBinario));
     }
 }
